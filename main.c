@@ -36,17 +36,20 @@ user
 ////////////////////////////////////
 ////////////////////////////////////
 //Network
-struct Network {
-};
 
 typedef struct Socket {
     int f_descriptor;
 } Socket;
 
+struct Network {
+    Socket socket;
+};
+
 void new_network()
 {
     //if it isn't ip4 and ip6
     //checking
+
 }
 
 Socket new_socket() {
@@ -60,5 +63,8 @@ Socket new_socket() {
 ///////////////////////////////////////////////////
 
 int main() {
+    new_socket();
 }
+
+
 
