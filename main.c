@@ -1,5 +1,6 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <stdlib.h>
 
 struct messenger {
 //net
@@ -41,16 +42,6 @@ typedef struct Socket {
     int f_descriptor;
 } Socket;
 
-struct Network {
-    Socket socket;
-};
-
-void new_network()
-{
-    //if it isn't ip4 and ip6
-    //checking
-
-}
 
 Socket new_socket() {
     //see UDP hole punching
@@ -58,6 +49,19 @@ Socket new_socket() {
     return sock; 
 }
 
+typedef struct Network {
+    Socket socket;
+} Network;
+
+Network new_network()
+{
+    //if it isn't ip4 and ip6
+    //checking
+
+    //Network* net = (Network*) calloc(1, sizeof(Network));
+    Network net = {new_socket()};
+    return net;
+}
 ///////////////////////////////////////////////////
 ///////////////////////////////////////////////////
 ///////////////////////////////////////////////////
