@@ -53,13 +53,14 @@ typedef struct Network {
     Socket socket;
 } Network;
 
-Network new_network()
+Network* new_network()
 {
     //if it isn't ip4 and ip6
     //checking
 
     //Network* net = (Network*) calloc(1, sizeof(Network));
-    Network net = {new_socket()};
+    Network* net = (Network*) calloc(1, sizeof(Network));
+    net->socket = new_socket();
     return net;
 }
 ///////////////////////////////////////////////////
@@ -67,7 +68,7 @@ Network new_network()
 ///////////////////////////////////////////////////
 
 int main() {
-    new_socket();
+    new_network();
 }
 
 
