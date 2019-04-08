@@ -38,6 +38,7 @@ user
 ////////////////////////////////////
 //logger
 #include <stdio.h>
+#include <time.h>
 
 typedef enum Log_lvl {
     IS_LOG_TRACE,
@@ -47,15 +48,22 @@ typedef enum Log_lvl {
     IS_LOG_ERR
 } Log_lvl;
 
-void log(const char* file, const char* line, const char* func, const char* msg) {
-    printf("%s:%s;%s: %s", file, line, func, msg);
+void log(const char* file, int line, const char* func, const char* msg) {
+    time_t t_raw;
+    struct tm * t_info;
+
+    time(&t_raw);
+    t_info = localtime(&t_raw);
+
+    printf("%s   %s:%i;%s: %s\n", asctime(t_info), file, line, func, msg);
 }
+
 
 #define MIN_LOG_LVL IS_LOG_TRACE
 #define LOG(level, msg) \
     do { \
         if (level >= MIN_LOG_LVL) {\
-            log(__FILE__, /*__LINE__*/"zzz", __func__, /*msg*/"zzz");\
+            log(__FILE__, __LINE__, __func__, msg);\
         }\
     } while(0)
 
