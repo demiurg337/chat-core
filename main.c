@@ -47,11 +47,16 @@ typedef enum Log_lvl {
     IS_LOG_ERR
 } Log_lvl;
 
-void log(const char* msg, const char* file, const char* func, const char* line) {
+void log(const char* file, const char* func, const char* line, const char* msg) {
     printf("TTTTTTTTTTTT");
 }
 
-#define LOG(msg, Log_lvl);
+#define MIN_LOG_LVL IS_LOG_TRACE
+#define LOG(level, msg) \
+    do { \
+        if (level >= MIN_LOG_LVL) {\
+        }\
+    } while(0)
 
 ////////////////////////////////////
 ////////////////////////////////////
