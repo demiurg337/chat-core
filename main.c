@@ -2,6 +2,8 @@
 #include <netinet/in.h>
 #include <stdlib.h>
 #include <log.h>
+#include <fcntl.h>
+#include <string.h>
 
 struct messenger {
 //net
@@ -15,8 +17,6 @@ struct messenger {
 };
 
 
-struct Ip {
-};
 
 
 /*
@@ -42,13 +42,15 @@ user
 ////////////////////////////////////
 ////////////////////////////////////
 //Network
+struct Ip {
+};
 
 typedef struct Socket {
     int f_descriptor;
 } Socket;
 
 
-Socket new_socket() {
+int new_socket() {
     //see UDP hole punching
     int sock_d = (int) socket(AF_UNSPEC, SOCK_DGRAM, IPPROTO_UDP);
     int max_buf = 1024 * 1024 * 2;//2 Megabites
@@ -61,12 +63,16 @@ Socket new_socket() {
     //enable broadcast (shorokoveshatelniu) address (only for udp)
     setsockopt(sock_d, SOL_SOCKET, SO_BROADCAST, &is_enabled, sizeof(is_enabled)); 
 
-    Socket sock = {sock_d};
-    return sock; 
+    //make socket not blocking
+    if (fcntl(sock_d, F_SETFL, O_NONBLOCK, 1) == 0) {
+        return 0;
+    }
+
+    return sock_d; 
 }
 
 typedef struct Network {
-    Socket socket;
+   int socket_d;
 } Network;
 
 Network* new_network()
@@ -76,13 +82,18 @@ Network* new_network()
 
     //Network* net = (Network*) calloc(1, sizeof(Network));
     Network* net = (Network*) calloc(1, sizeof(Network));
-    net->socket = new_socket();
+    net->socket_d = new_socket();
     /*
     !!!!!!!!!!!!!!!!!!!! 
     FREEEE NET !!!!!!!!!!!!!!!!!!!!
     !!!!!!!!!!!
     */
+    struct sockaddr_storage addr;
+    memset(&addr, 0, sizeof(sockaddr_storage));
     
+    //bind socket to some address and port 
+
+
 
     return net;
 }
