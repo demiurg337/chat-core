@@ -114,6 +114,8 @@ Network* new_network()
         v6only_need_val = 0,
         v6only_val = 0;
         socklen_t v6only_optsize = sizeof (v6only_val);
+    //IPV6_V6ONLY = 0 - port resive packets  from IPv6 and IPv4
+    /*
     if (
         getsockopt(net->socket_d, IPPROTO_IPV6, IPV6_V6ONLY, &v6only_val, &v6only_optsize) == 0
         &&
@@ -122,6 +124,9 @@ Network* new_network()
         v6only_val = v6only_need_val;
         setsockopt(net->socket_d, IPPROTO_IPV6, IPV6_V6ONLY, &v6only_need_val, sizeof(v6only_need_val));
     }
+
+    need to check IPV6_ADD_MEMBERSHIP, but now it is skipec
+    */
 
 
 
