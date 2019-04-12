@@ -109,13 +109,12 @@ Network* new_network()
     //???
     addr6->sin6_flowinfo = 0;
     addr6->sin6_scope_id = 0;
-
+    /*
     int 
         v6only_need_val = 0,
         v6only_val = 0;
         socklen_t v6only_optsize = sizeof (v6only_val);
     //IPV6_V6ONLY = 0 - port resive packets  from IPv6 and IPv4
-    /*
     if (
         getsockopt(net->socket_d, IPPROTO_IPV6, IPV6_V6ONLY, &v6only_val, &v6only_optsize) == 0
         &&
@@ -127,7 +126,20 @@ Network* new_network()
 
     need to check IPV6_ADD_MEMBERSHIP, but now it is skipec
     */
+    
+    int
+        port_from = 2000,
+        port_to = 3000,
+        res_bind;
 
+    for (int p = port_from; p <= port_to; p++) {
+        addr6->sin6_port = htons(p);
+        res_bind = bind(net->socket_d, (struct sockaddr *) &addr, sizeof(addr));
+        if (res_bind == 0) {
+            //LOG_TRACE("Socket has been bound to port %i", p);
+            break; 
+        }
+    }
 
 
     return net;
