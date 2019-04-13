@@ -9,25 +9,25 @@ typedef enum Log_lvl {
     IS_LOG_ERR
 } Log_lvl;
 
-void log(const char* file, int line, const char* func, const char* msg);
+void log(const char* file, int line, const char* func, const char* msg_template, ...);
 
 #define MIN_LOG_LVL IS_LOG_TRACE
-#define LOG(level, msg) \
+#define LOG(level, ...) \
     do { \
         if (level >= MIN_LOG_LVL) {\
-            log(__FILE__, __LINE__, __func__, msg);\
+            log(__FILE__, __LINE__, __func__, __VA_ARGS__);\
         }\
     } while(0)
 
-#define LOG_TRACE(msg) LOG(IS_LOG_TRACE, msg)
-#define LOG_DEBUG(msg) LOG(IS_LOG_DEBUG, msg)
-#define LOG_INFO(msg)  LOG(IS_LOG_INFO, msg)
-#define LOG_WARN(msg)  LOG(IS_LOG_WARN, msg)
-#define LOG_ERR(msg)   LOG(IS_LOG_ERR, msg)
+#define LOG_TRACE(...) LOG(IS_LOG_TRACE, __VA_ARGS__)
+#define LOG_DEBUG(...) LOG(IS_LOG_DEBUG, __VA_ARGS__)
+#define LOG_INFO(...)  LOG(IS_LOG_INFO, __VA_ARGS__)
+#define LOG_WARN(...)  LOG(IS_LOG_WARN, __VA_ARGS__)
+#define LOG_ERR(...)   LOG(IS_LOG_ERR, __VA_ARGS__)
 
-#define LOG_FATAL(msg) \
+#define LOG_FATAL(...) \
     do {\
-        LOG_ERR(msg);\
+        LOG_ERR(__VA_ARGS__); \
         abort();\
     } while(0)
 

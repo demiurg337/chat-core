@@ -149,7 +149,7 @@ Network* new_network()
 ///////////////////////////////////////////////////
 
 int main() {
-    new_network();
+    //new_network();
     LOG_TRACE("UEUEUEUE");
 }
 
