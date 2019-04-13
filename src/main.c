@@ -1,3 +1,5 @@
+#include <errno.h>
+
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <stdlib.h>
@@ -52,7 +54,7 @@ typedef struct Socket {
 
 int new_socket() {
     //see UDP hole punching
-    int sock_d = (int) socket(AF_UNSPEC, SOCK_DGRAM, IPPROTO_UDP);
+    int sock_d = (int) socket(AF_INET6, SOCK_DGRAM, 0);
     int max_buf = 1024 * 1024 * 2;//2 Megabites
     //set max buffer size
     setsockopt(sock_d, SOL_SOCKET, SO_RCVBUF, &max_buf, sizeof(max_buf)); 
@@ -136,7 +138,7 @@ Network* new_network()
         addr6->sin6_port = htons(p);
         res_bind = bind(net->socket_d, (struct sockaddr *) &addr, sizeof(addr));
         if (res_bind == 0) {
-            //LOG_TRACE("Socket has been bound to port %i", p);
+            LOG_TRACE("Socket has been bound to port %i", p);
             break; 
         }
     }
@@ -149,7 +151,7 @@ Network* new_network()
 ///////////////////////////////////////////////////
 
 int main() {
-    //new_network();
+    new_network();
     LOG_TRACE("UEUEUEUE, %i", 20);
 }
 
