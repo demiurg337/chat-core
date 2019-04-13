@@ -150,7 +150,7 @@ Network* new_network()
 
 int main() {
     //new_network();
-    LOG_TRACE("UEUEUEUE");
+    LOG_TRACE("UEUEUEUE, %i", 20);
 }
 
 
