@@ -1,3 +1,5 @@
+#ifndef C_CHAT_CORE_LOG
+#define C_CHAT_CORE_LOG
 
 #include <stdio.h>
 #include <time.h>
@@ -33,3 +35,4 @@ void log(const char* file, int line, const char* func, const char* msg_template,
 
 
 
+#endif //C_CHAT_CORE_LOG
