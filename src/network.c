@@ -38,6 +38,11 @@ Network* new_network()
 
     //Network* net = (Network*) calloc(1, sizeof(Network));
     Network* net = (Network*) calloc(1, sizeof(Network));
+    
+    if (!net) {
+        LOG_FATAL("Cant get memory for network !");
+    }
+
     net->socket_d = new_socket();
     if (net->socket_d < 0) {
         LOG_FATAL("Cant create socket !");
@@ -105,15 +110,10 @@ Network* new_network()
     return net;
 }
 
-/*
-0 - success
--1 -  error
-*/
-int close_network(Network* net) 
+void close_network(Network* net) 
 {
     close(net->socket_d);
     free(net);
     //messeger_run_interval - minal run intervel which need for tox
     //src/bootstrap.c
-    return 0;
 }

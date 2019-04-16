@@ -1,9 +1,11 @@
 #include <errno.h>
+#include <stdlib.h>
 
 #include "log.h"
 #include "network.h"
 
 struct Messenger {
+    Network* network;
 //net
 
 //dht
@@ -12,7 +14,6 @@ struct Messenger {
 //log
 //crypto
 //options
-//Network* network
 };
 
 
@@ -32,20 +33,28 @@ user
 
 */
 
-////////////////////////////////////
-////////////////////////////////////
-////////////////////////////////////
-////////////////////////////////////
-//logger
-////////////////////////////////////
-////////////////////////////////////
-////////////////////////////////////
-///////////////////////////////////////////////////
-///////////////////////////////////////////////////
-///////////////////////////////////////////////////
+Messenger* new_messenger()
+{
+    Messenger* messenger = (Messenger*) calloc(1, sizeof(Messenger));
+
+    if (!messenger) {
+        return NULL;
+    }
+
+    messenger->network = new_network();
+
+    return messenger;
+}
+
+void close_messenger(Messenger* messenger)
+{
+    close_network(messenger->network);
+    free(messenger);
+}
 
 void add_new_friend() 
 {
+
 }
 
 void do_friends() {
@@ -53,9 +62,9 @@ void do_friends() {
 }
 
 int main() {
-    Network* net = new_network();
+    Messenger* messenger = new_messenger();
     LOG_TRACE("UEUEUEUE, %i", 20);
-    close_network(net);
+    close_messenger(messenger);
 }
 
 

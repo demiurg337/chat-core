@@ -9,4 +9,4 @@ typedef struct Network {
 
 
 Network* new_network();
-int close_network(Network* net);
+void close_network(Network* net);
