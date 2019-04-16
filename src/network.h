@@ -8,6 +8,5 @@ typedef struct Network {
 } Network;
 
 
-int new_socket();
 Network* new_network();
 int close_network(Network* net);

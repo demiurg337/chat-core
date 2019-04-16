@@ -9,7 +9,7 @@
 #include "log.h"
 #include "network.h"
 
-int new_socket() {
+int static new_socket() {
     //see UDP hole punching
     int sock_d = (int) socket(AF_INET6, SOCK_DGRAM, 0);
     int max_buf = 1024 * 1024 * 2;//2 Megabites
