@@ -5,6 +5,26 @@
 #include "log.h"
 #include "network.h"
 
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+typedef struct Friend {
+    //public key
+} Friend;
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+typedef struct {
+    int size;
+    Friend* data;
+} FriendsVector;
+
+
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+
+
 struct Messenger {
     Network* network;
 //net
@@ -15,6 +35,10 @@ struct Messenger {
 //log
 //crypto
 //options
+
+/*
+Saving of friends is in separated way
+*/
 };
 
 
@@ -73,6 +97,17 @@ void try_add_friend_with_request(Messenger* messenger, const uint8_t* user_addre
 
     //change config for sending the message
     //(it will be in main cicle, in do_friends
+}
+
+
+void init_new_friend() 
+{
+    //messeger variable with all friends
+
+    /*
+    Seems like 
+    friendlist is big, big, big pointer !!!!
+    */
 }
 
 void do_friends() {
