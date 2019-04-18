@@ -78,7 +78,7 @@ void init_friends_list(FriendsVector* friends)
 
 void free_friends_list(FriendsVector* friends)
 {
-    //free(friends->data);
+    free(friends->data);
 }
 ///////////////////////////////////////////////////
 ///////////////////////////////////////////////////
