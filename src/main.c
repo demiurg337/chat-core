@@ -5,28 +5,23 @@
 #include "log.h"
 #include "network.h"
 
-///////////////////////////////////////////////////
-///////////////////////////////////////////////////
-///////////////////////////////////////////////////
+
+
 typedef struct Friend {
-    //public key
+    uint8_t public_key;
 } Friend;
-///////////////////////////////////////////////////
-///////////////////////////////////////////////////
-///////////////////////////////////////////////////
+
 typedef struct {
     int size;
     Friend* data;
 } FriendsVector;
 
 
-///////////////////////////////////////////////////
-///////////////////////////////////////////////////
-///////////////////////////////////////////////////
-
-
 struct Messenger {
     Network* network;
+    FriendsVector friends;
+
+
 //net
 
 //dht
@@ -40,6 +35,50 @@ struct Messenger {
 Saving of friends is in separated way
 */
 };
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+
+
+void appenid_to_friends_list() {
+    //set_new_size_friends_list
+}
+
+void set_new_size_friends_list(int new_size)
+{
+    /*
+    if (friends->size <= 0) {
+        if (new_size > 0) {
+            init_friends_list(1);
+            friends.size++;
+        }
+
+        return friends.size;
+    } else {
+        
+    }
+    */
+}
+
+void init_friends_list(FriendsVector* friends)
+{
+    friends->size = 0;
+    /*
+    friends.data = (FriendsVector*) alloc(initial_size, sizeof(Friend));  
+    if (!friends) {
+        LOG_FATAL("Can't init friends list !"); 
+    }
+
+    */
+}
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+
+
 
 
 
@@ -67,6 +106,7 @@ Messenger* new_messenger()
     }
 
     messenger->network = new_network();
+    init_friends_list(&messenger->friends); 
 
     return messenger;
 }
@@ -75,6 +115,22 @@ void close_messenger(Messenger* messenger)
 {
     close_network(messenger->network);
     free(messenger);
+}
+
+
+
+void init_new_friend() 
+{
+    //messeger variable with all friends
+
+
+    /*
+    Seems like 
+    friendlist is big, big, big pointer !!!!
+    */
+
+
+    //friends->data[friends-size - 1].public_key = "zzzzzzzzzzzzz";
 }
 
 /*api*/
@@ -94,21 +150,13 @@ void try_add_friend_with_request(Messenger* messenger, const uint8_t* user_addre
 
 
     /// init_new_friend
+    init_new_friend();
 
     //change config for sending the message
     //(it will be in main cicle, in do_friends
 }
 
 
-void init_new_friend() 
-{
-    //messeger variable with all friends
-
-    /*
-    Seems like 
-    friendlist is big, big, big pointer !!!!
-    */
-}
 
 void do_friends() {
     
