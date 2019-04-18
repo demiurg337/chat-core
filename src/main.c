@@ -66,13 +66,19 @@ void set_new_size_friends_list(int new_size)
 void init_friends_list(FriendsVector* friends)
 {
     friends->size = 0;
+    //friends->data = (Friend*) calloc(1, sizeof(Friend));  
     /*
-    friends.data = (FriendsVector*) alloc(initial_size, sizeof(Friend));  
     if (!friends) {
         LOG_FATAL("Can't init friends list !"); 
     }
 
     */
+}
+
+
+void free_friends_list(FriendsVector* friends)
+{
+    //free(friends->data);
 }
 ///////////////////////////////////////////////////
 ///////////////////////////////////////////////////
@@ -114,6 +120,7 @@ Messenger* new_messenger()
 void close_messenger(Messenger* messenger)
 {
     close_network(messenger->network);
+    free_friends_list(&messenger->friends);
     free(messenger);
 }
 
