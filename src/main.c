@@ -5,14 +5,31 @@
 #include "log.h"
 #include "network.h"
 
+////////////////////////////////////////
+////////////////////////////////////////
+// need to move to some utils
+// wrappers
 
+void* safe_calloc(size_t count_els, size_t el_size)
+{
+    void* p = calloc(count_els,  el_size);
+    if (!p) {
+        LOG_FATAL("Can't get memory !");
+    }
+
+    return p;
+}
+
+
+////////////////////////////////////////
+////////////////////////////////////////
 
 typedef struct Friend {
     uint8_t public_key;
 } Friend;
 
 typedef struct {
-    int size;
+    int _size;
     Friend* data;
 } FriendsVector;
 
@@ -43,30 +60,28 @@ Saving of friends is in separated way
 ///////////////////////////////////////////////////
 
 
-void appenid_to_friends_list() {
+void appenid_to_friends_list(FriendsVector* frinds) {
     //set_new_size_friends_list
+
 }
 
-void set_new_size_friends_list(int new_size)
+static void set_new_size_friends_list(FriendsVector* friends, int new_size)
 {
-    /*
-    if (friends->size <= 0) {
+    if (friends->_size == 0) {
         if (new_size > 0) {
-            init_friends_list(1);
-            friends.size++;
+            friends->data = (Friend*) safe_calloc(new_size, sizeof(Friend)); 
+            friends->_size = new_size;
         }
 
-        return friends.size;
+        //return friends->_size;
     } else {
         
     }
-    */
 }
 
 void init_friends_list(FriendsVector* friends)
 {
-    friends->size = 0;
-    //friends->data = (Friend*) calloc(1, sizeof(Friend));  
+    friends->_size = 0;
     /*
     if (!friends) {
         LOG_FATAL("Can't init friends list !"); 
@@ -84,11 +99,6 @@ void free_friends_list(FriendsVector* friends)
 ///////////////////////////////////////////////////
 ///////////////////////////////////////////////////
 
-
-
-
-
-
 /*
 
 tox_iterate
@@ -99,8 +109,6 @@ I -> messager
 
 user
 -> name
-
-
 */
 
 Messenger* new_messenger()
