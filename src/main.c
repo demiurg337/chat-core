@@ -20,6 +20,15 @@ void* safe_calloc(size_t count_els, size_t el_size)
     return p;
 }
 
+void* safe_realloc(void* ptr, size_t new_size)
+{
+    void* p = realloc(ptr, new_size);
+    if (!p) {
+        LOG_FATAL("Can't realloc memory !");
+    }
+
+    return p;
+}
 
 ////////////////////////////////////////
 ////////////////////////////////////////
@@ -64,18 +73,22 @@ Return new size
 */
 static int set_new_size_friends_list(FriendsVector* friends, int new_size)
 {
-    if (friends->_size == 0) {
-        if (new_size > 0) {
-            friends->data = (Friend*) safe_calloc(new_size, sizeof(Friend)); 
-            friends->_size = new_size;
-        }
-
-        //return friends->_size;
-    } else {
-         
+    if (new_size < 0) {
+        LOG_FATAL("Size can't be less than 0 !");
     }
 
-    return friends->_size;
+    if (new_size > 0) {
+        if (friends->_size == 0) {
+            friends->data = (Friend*) safe_calloc(new_size, sizeof(Friend)); 
+        } else {
+            friends->data = (Friend*) safe_realloc(friends->data, new_size * sizeof(Friend)); 
+        }
+
+    } else {
+    }
+
+    friends->_size = new_size;
+    return new_size;
 }
 
 
@@ -184,6 +197,10 @@ int main() {
     char a[5] = {'a', 'v', 'c', 'c', '\0'};
     LOG_TRACE("UEUEUEUE, %s %i", a,  (uint8_t*) a);
     try_add_friend_with_request(messenger);
+    try_add_friend_with_request(messenger);
+    try_add_friend_with_request(messenger);
+    try_add_friend_with_request(messenger);
+    printf("++++++++++++%i", messenger->friends._size);
     close_messenger(messenger);
 }
 
