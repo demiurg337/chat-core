@@ -59,13 +59,10 @@ Saving of friends is in separated way
 ///////////////////////////////////////////////////
 ///////////////////////////////////////////////////
 
-
-void appenid_to_friends_list(FriendsVector* frinds) {
-    //set_new_size_friends_list
-
-}
-
-static void set_new_size_friends_list(FriendsVector* friends, int new_size)
+/*
+Return new size
+*/
+static int set_new_size_friends_list(FriendsVector* friends, int new_size)
 {
     if (friends->_size == 0) {
         if (new_size > 0) {
@@ -75,19 +72,23 @@ static void set_new_size_friends_list(FriendsVector* friends, int new_size)
 
         //return friends->_size;
     } else {
-        
+         
     }
+
+    return friends->_size;
+}
+
+
+bool static append_place_to_friends_list(FriendsVector* friends) {
+    //set_new_size_friends_list
+    int size_before = friends->_size;
+    set_new_size_friends_list(friends, friends->_size + 1);
+    return size_before < friends->_size;
 }
 
 void init_friends_list(FriendsVector* friends)
 {
     friends->_size = 0;
-    /*
-    if (!friends) {
-        LOG_FATAL("Can't init friends list !"); 
-    }
-
-    */
 }
 
 
@@ -134,7 +135,7 @@ void close_messenger(Messenger* messenger)
 
 
 
-void init_new_friend() 
+void init_new_friend(FriendsVector* friends) 
 {
     //messeger variable with all friends
 
@@ -143,13 +144,14 @@ void init_new_friend()
     Seems like 
     friendlist is big, big, big pointer !!!!
     */
-
-
+    append_place_to_friends_list(friends);
+    friends->data[friends->_size - 1].public_key = 100;
+    
     //friends->data[friends-size - 1].public_key = "zzzzzzzzzzzzz";
 }
 
 /*api*/
-void try_add_friend_with_request(Messenger* messenger, const uint8_t* user_address, const uint8_t* msg) 
+void try_add_friend_with_request(Messenger* messenger/*, const uint8_t* user_address, const uint8_t* msg*/)
 {
     //checking of address
     //m_addfriend
@@ -165,7 +167,7 @@ void try_add_friend_with_request(Messenger* messenger, const uint8_t* user_addre
 
 
     /// init_new_friend
-    init_new_friend();
+    init_new_friend(&messenger->friends);
 
     //change config for sending the message
     //(it will be in main cicle, in do_friends
@@ -181,6 +183,7 @@ int main() {
     Messenger* messenger = new_messenger();
     char a[5] = {'a', 'v', 'c', 'c', '\0'};
     LOG_TRACE("UEUEUEUE, %s %i", a,  (uint8_t*) a);
+    try_add_friend_with_request(messenger);
     close_messenger(messenger);
 }
 
