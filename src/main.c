@@ -1,6 +1,7 @@
 #include <errno.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <string.h>
 
 #include "log.h"
 #include "network.h"
@@ -82,6 +83,9 @@ static int set_new_size_friends_list(FriendsVector* friends, int new_size)
             friends->data = (Friend*) safe_calloc(new_size, sizeof(Friend)); 
         } else {
             friends->data = (Friend*) safe_realloc(friends->data, new_size * sizeof(Friend)); 
+            if (new_size > friends->_size) {
+                memset(&friends->data[friends->_size], 0, (new_size - friends->_size) * sizeof(Friend));
+            }
         }
 
     } else {
