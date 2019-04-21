@@ -34,8 +34,14 @@ void* safe_realloc(void* ptr, size_t new_size)
 ////////////////////////////////////////
 ////////////////////////////////////////
 
-typedef struct Friend {
+typedef enum {
+    REGULAR_FRIEND,
+    WAITING_CONFIRMATION_OF_FRIENDSHIP
+} Friend_Status;
+
+typedef struct {
     uint8_t public_key;
+    Friend_Status status;
 } Friend;
 
 typedef struct {
@@ -163,6 +169,7 @@ void init_new_friend(FriendsVector* friends)
     */
     append_place_to_friends_list(friends);
     friends->data[friends->_size - 1].public_key = 100;
+    friends->data[friends->_size - 1].status = REGULAR_FRIEND;
     
     //friends->data[friends-size - 1].public_key = "zzzzzzzzzzzzz";
 }
