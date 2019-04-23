@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
+#include <unistd.h>
+
+#include <netinet/in.h>
 
 #include "log.h"
 #include "network.h"
@@ -203,6 +206,23 @@ void do_friends() {
     
 }
 
+
+void send_packet(int from_socket) 
+{
+    const char* msg = "qwert";
+    int length = 6;
+    size_t address_size = sizeof(struct sockaddr_in6);
+
+    //ipv6
+
+    //sendto(from_socket,  
+}
+
+void processing_of_request()
+{
+    
+}
+
 int main() {
     Messenger* messenger = new_messenger();
     char a[5] = {'a', 'v', 'c', 'c', '\0'};
@@ -211,9 +231,18 @@ int main() {
     try_add_friend_with_request(messenger);
     try_add_friend_with_request(messenger);
     try_add_friend_with_request(messenger);
+
+    
+
     printf("++++++++++++%i", messenger->friends._size);
+
+    while(1) {
+        do_friends();
+
+        usleep(20000);//0.02
+    }
+
     close_messenger(messenger);
 }
-
 
 
