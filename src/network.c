@@ -5,6 +5,7 @@
 #include <fcntl.h>
 #include <string.h>
 #include <unistd.h>
+#include <arpa/inet.h>
 
 #include "log.h"
 #include "network.h"
@@ -97,7 +98,10 @@ Network* new_network()
         addr6->sin6_port = htons(p);
         res_bind = bind(net->socket_d, (struct sockaddr *) &addr, sizeof(addr));
         if (res_bind == 0) {
-            LOG_TRACE("Socket has been bound to port %i", p);
+            char ip_str_name[INET_ADDRSTRLEN];
+            inet_ntop(AF_INET6, &addr6->sin6_addr, ip_str_name, sizeof(ip_str_name));
+
+            LOG_TRACE("Socket has been bound to port %i on host  \"%s\"", p, ip_str_name);
             break; 
         }
     }
