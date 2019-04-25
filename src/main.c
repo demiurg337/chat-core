@@ -240,26 +240,12 @@ int main() {
     char a[5] = {'a', 'v', 'c', 'c', '\0'};
     LOG_TRACE("UEUEUEUE, %s %i", a,  (uint8_t*) a);
     try_add_friend_with_request(messenger);
-    try_add_friend_with_request(messenger);
-    try_add_friend_with_request(messenger);
-    try_add_friend_with_request(messenger);
-
-    
 
     printf("++++++++++++%i", messenger->friends._size);
-    Network* m = messenger->network;
-    int z = m->socket_d;
-        /*
-        send_packet(m->socket_d);
-        send_packet(m->socket_d);
-        send_packet(m->socket_d);
-        send_packet(m->socket_d);
-        send_packet(m->socket_d);
-        */
     while(1) {
         do_friends();
         printf("\n\n=======\n\n");
-        send_packet(m->socket_d);
+        send_packet(messenger->network->socket_d);
         //send_packet(m->socket_d);
         //usleep(20000);//0.02
         usleep(2000000);
