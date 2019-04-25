@@ -223,7 +223,7 @@ void send_packet(int from_socket)
     addr6.sin6_scope_id = 0;
     
     //addr6->sin6_addr.s6_addr = htonl( "::");
-    addr6.sin6_addr = in6addr_loopback;
+    addr6.sin6_addr = in6addr_any;
     printf("=============\n\n\n");
     //127.0.0.1
     //addr6->sin6_addr.s6_addr = 5c:f9:dd:53:80:e3;
