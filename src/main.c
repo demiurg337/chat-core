@@ -214,6 +214,18 @@ void send_packet(int from_socket)
     size_t address_size = sizeof(struct sockaddr_in6);
 
     //ipv6
+    struct sockaddr_in6 addr6;
+    addr6.sin6_family = AF_INET6; 
+    addr6.sin6_port = 4001; 
+    addr6.sin6_flowinfo = 0;
+    addr6.sin6_scope_id = 0;
+    
+    //addr6->sin6_addr.s6_addr = htonl( "::");
+    addr6.sin6_addr = in6addr_loopback;
+    printf("=============\n\n\n");
+    //127.0.0.1
+    //addr6->sin6_addr.s6_addr = 5c:f9:dd:53:80:e3;
+    sendto(from_socket, msg, 6, 0, (struct sockaddr*) &addr6, sizeof(addr6));
 
     //sendto(from_socket,  
 }
@@ -235,11 +247,22 @@ int main() {
     
 
     printf("++++++++++++%i", messenger->friends._size);
-
+    Network* m = messenger->network;
+    int z = m->socket_d;
+        /*
+        send_packet(m->socket_d);
+        send_packet(m->socket_d);
+        send_packet(m->socket_d);
+        send_packet(m->socket_d);
+        send_packet(m->socket_d);
+        */
     while(1) {
         do_friends();
-
-        usleep(20000);//0.02
+        printf("\n\n=======\n\n");
+        send_packet(m->socket_d);
+        //send_packet(m->socket_d);
+        //usleep(20000);//0.02
+        usleep(2000000);
     }
 
     close_messenger(messenger);
