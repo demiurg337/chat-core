@@ -209,7 +209,7 @@ void do_friends() {
 }
 
 
-void send_packet(int from_socket) 
+void send_packet(int from_socket, int port) 
 {
     const char* msg = "qwert";
     int length = 6;
@@ -218,7 +218,7 @@ void send_packet(int from_socket)
     //ipv6
     struct sockaddr_in6 addr6;
     addr6.sin6_family = AF_INET6; 
-    addr6.sin6_port = 2000; 
+    addr6.sin6_port = htons(port); 
     addr6.sin6_flowinfo = 0;
     addr6.sin6_scope_id = 0;
     
@@ -227,7 +227,8 @@ void send_packet(int from_socket)
     printf("=============\n\n\n");
     //127.0.0.1
     //addr6->sin6_addr.s6_addr = 5c:f9:dd:53:80:e3;
-    sendto(from_socket, msg, 6, 0, (struct sockaddr*) &addr6, sizeof(addr6));
+    int res = sendto(from_socket, msg, 6, 0, (struct sockaddr*) &addr6, sizeof(addr6));
+    printf("\n\nres=%i", res);
 
     //sendto(from_socket,  
 }
@@ -239,12 +240,11 @@ void processing_of_request()
 
 int main() {
     char str[100];
-    int i;
-    printf("Enter host for sending message:");
-    fgets(str, 100, stdin);
+    int port;
+    printf("Enter host for sending message:\n\n");
+    //fgets(str, 100, stdin);
+    scanf("%i", &port);
     
-    printf("\n\n%s %i\n\n", str, i); 
-
     Messenger* messenger = new_messenger();
     char a[5] = {'a', 'v', 'c', 'c', '\0'};
     LOG_TRACE("UEUEUEUE, %s %i", a,  (uint8_t*) a);
@@ -258,16 +258,16 @@ int main() {
     while(1) {
         do_friends();
         printf("\n\n=======\n\n");
-        send_packet(messenger->network->socket_d);
+        send_packet(messenger->network->socket_d, port);
         //send_packet(m->socket_d);
         //usleep(20000);//0.02
         
         num_received_bytes = recvfrom(messenger->network->socket_d, msg, 10, 0, (struct sockaddr*) &addr6_was_sent, &addr_len);
         if (num_received_bytes > 0) {
-            printf("RRRRRRR");
+            printf("\n\nReceived message: %s", msg);
         } else if(num_received_bytes == -1) {
 
-            printf("!!!!!!!!!!!!i%s", strerror(errno));
+            printf("Error has been occured: %s", strerror(errno));
         }
 
         usleep(2000000);
