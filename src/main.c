@@ -238,6 +238,13 @@ void processing_of_request()
 }
 
 int main() {
+    char str[100];
+    int i;
+    printf("Enter host for sending message:");
+    fgets(str, 100, stdin);
+    
+    printf("\n\n%s %i\n\n", str, i); 
+
     Messenger* messenger = new_messenger();
     char a[5] = {'a', 'v', 'c', 'c', '\0'};
     LOG_TRACE("UEUEUEUE, %s %i", a,  (uint8_t*) a);
