@@ -8,6 +8,8 @@
 
 #include <netinet/in.h>
 
+#include <ncurses.h>
+
 #include "log.h"
 #include "network.h"
 
@@ -239,6 +241,13 @@ void processing_of_request()
 }
 
 int main() {
+    initscr();
+    printw("HHH");
+    refresh();
+    getch();
+    endwin();
+
+    /*
     char str[100];
     int port;
     printf("Enter host for sending message:\n\n");
@@ -274,6 +283,7 @@ int main() {
     }
 
     close_messenger(messenger);
+    */
 }
 
 
