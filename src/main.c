@@ -243,7 +243,13 @@ void processing_of_request()
 int main() {
     initscr();
     printw("HHH");
+
     refresh();
+    WINDOW* win = newwin(3, 3, 15, 35);
+    box(win, 0, 0);
+    wrefresh(win);
+
+    printw("HHH");
     getch();
     endwin();
 
