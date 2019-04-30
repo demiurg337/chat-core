@@ -244,6 +244,11 @@ int main() {
     initscr();
     printw("HHH");
 
+    /*
+    have to use
+    refresh
+    and after can be used only wrefresh
+    */
     refresh();
     WINDOW* win = newwin(3, 3, 15, 35);
     box(win, 0, 0);
