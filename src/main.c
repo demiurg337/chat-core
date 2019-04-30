@@ -242,15 +242,24 @@ void processing_of_request()
 
 int main() {
     initscr();
-    printw("HHH");
 
     /*
     have to use
     refresh
     and after can be used only wrefresh
     */
-    refresh();
+    keypad(stdscr, true);
+    //for preventing showing keys from keyboard
+    noecho();
+    printw("===============\n");
+    int ch = getch();
 
+    if (ch == KEY_F(3)) {
+        printw("XXXXXXXXXX");
+    }
+        printw("YYYYYYYYYYYYYY");
+
+    refresh();
     WINDOW* msg_win = newwin(20, 150, 1, 3);
     box(msg_win, 0, 0);
     wrefresh(msg_win);
@@ -258,9 +267,13 @@ int main() {
     WINDOW* input_win = newwin(7, 150, 22, 3);
     box(input_win, 0, 0);
     wrefresh(input_win);
-
-    printw("HHH");
+    
+    //keypad(input_win, true);
+    //Suspend execution untill user will do some input
     getch();
+    while(1) {
+        
+    }
     endwin();
 
     /*
