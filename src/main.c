@@ -270,9 +270,12 @@ int main() {
     
     //keypad(input_win, true);
     //Suspend execution untill user will do some input
-    getch();
     while(1) {
         
+        //getch();
+        mvwprintw(input_win,1 ,1, (char*) "zzz");
+        wrefresh(input_win);
+        sleep(1);
     }
     endwin();
 
