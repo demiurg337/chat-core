@@ -250,9 +250,14 @@ int main() {
     and after can be used only wrefresh
     */
     refresh();
-    WINDOW* win = newwin(3, 3, 15, 35);
-    box(win, 0, 0);
-    wrefresh(win);
+
+    WINDOW* msg_win = newwin(20, 150, 1, 3);
+    box(msg_win, 0, 0);
+    wrefresh(msg_win);
+
+    WINDOW* input_win = newwin(7, 150, 22, 3);
+    box(input_win, 0, 0);
+    wrefresh(input_win);
 
     printw("HHH");
     getch();
