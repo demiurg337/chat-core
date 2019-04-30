@@ -269,11 +269,19 @@ int main() {
     wrefresh(input_win);
     
     //keypad(input_win, true);
+    
+    timeout(100);//without it will stop on getch
+    //wtimeout(input_win, 100);
     //Suspend execution untill user will do some input
+    int symbol;
     while(1) {
         
-        //getch();
-        mvwprintw(input_win,1 ,1, (char*) "zzz");
+        if ((symbol = getch()) != ERR) {
+        //if ((symbol = wgetch(input_win)) != ERR) {
+            mvwprintw(input_win,1 ,1, (char*) "zzz");
+        } else {
+            mvwprintw(input_win,1 ,1, (char*) "m");
+        }
         wrefresh(input_win);
         sleep(1);
     }
