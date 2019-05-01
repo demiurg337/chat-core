@@ -13,6 +13,8 @@
 #include "log.h"
 #include "network.h"
 
+#include <locale.h>
+
 ////////////////////////////////////////
 ////////////////////////////////////////
 // need to move to some utils
@@ -241,6 +243,7 @@ void processing_of_request()
 }
 
 int main() {
+    setlocale(LC_ALL,"");
     initscr();
 
     /*
@@ -251,14 +254,6 @@ int main() {
     keypad(stdscr, true);
     //for preventing showing keys from keyboard
     noecho();
-    printw("===============\n");
-    int ch = getch();
-
-    if (ch == KEY_F(3)) {
-        printw("XXXXXXXXXX");
-    }
-        printw("YYYYYYYYYYYYYY");
-
     refresh();
     WINDOW* msg_win = newwin(20, 150, 1, 3);
     box(msg_win, 0, 0);
@@ -273,19 +268,33 @@ int main() {
     timeout(100);//without it will stop on getch
     //wtimeout(input_win, 100);
     //Suspend execution untill user will do some input
-    int symbol;
-    while(1) {
+    int symbol = 0, msg_size = 0;
+    char msg_buf[300] = "";
+    int i = 0;
+    while(i < 2) {
         
-        if ((symbol = getch()) != ERR) {
-        //if ((symbol = wgetch(input_win)) != ERR) {
-            mvwprintw(input_win,1 ,1, (char*) "zzz");
-        } else {
-            mvwprintw(input_win,1 ,1, (char*) "m");
+        while ((symbol = getch()) != ERR) {
+       // while ((symbol = wgetch(input_win)) != ERR) {
+            msg_buf[msg_size++] = (char) symbol;
+            //mvwprintw(input_win,1 ,1, (char*) "mmmm");
         }
+        /*
+         else {
+            mvwprintw(input_win,1 ,1, (char*) "CCCCCCCC");
+        }
+        */
+            //mvwprintw(input_win,1 ,1, (char*) "CCCCCCCC");
+        mvwprintw(input_win,1 ,1, (char*) msg_buf);
         wrefresh(input_win);
+        /*
         sleep(1);
+        i++;
+        */
     }
     endwin();
+    msg_buf[0] = (char ) symbol;
+    printf("ddddd = %s", msg_buf);
+    printf("ddddd %i = %c", sizeof symbol, (char) symbol);
 
     /*
     char str[100];
