@@ -9,6 +9,7 @@
 #include <netinet/in.h>
 
 #include <ncurses.h>
+#include <form.h>
 
 #include "log.h"
 #include "network.h"
@@ -245,7 +246,6 @@ void processing_of_request()
 int main() {
     setlocale(LC_ALL,"");
     initscr();
-
     /*
     have to use
     refresh
@@ -255,6 +255,35 @@ int main() {
     //for preventing showing keys from keyboard
     noecho();
     refresh();
+
+    FIELD *field[3]; 
+    FORM *form;
+    field[0] = new_field(1, 10, 4, 18, 0, 0);
+    field[1] = new_field(1, 10, 6, 18, 0, 0);
+    field[2] = NULL;
+
+    /* Set field options */
+    set_field_back(field[0], A_UNDERLINE);
+    field_opts_off(field[0], O_AUTOSKIP);
+    /* Print a line for the option */
+    /* Don't go to next field when this */
+    /* Field is filled up
+    */
+    set_field_back(field[1], A_UNDERLINE);
+    field_opts_off(field[1], O_AUTOSKIP);
+
+    form = new_form(field);
+    post_form(form);
+    refresh();
+
+    mvprintw(4, 10, "Value 1:");
+    mvprintw(6, 10, "Value 2:");
+    refresh();
+
+    getch();
+    endwin();
+
+    /*
     WINDOW* msg_win = newwin(20, 150, 1, 3);
     box(msg_win, 0, 0);
     wrefresh(msg_win);
@@ -275,26 +304,24 @@ int main() {
         
         while ((symbol = getch()) != ERR) {
        // while ((symbol = wgetch(input_win)) != ERR) {
-            msg_buf[msg_size++] = (char) symbol;
+            if (symbol == KEY_BACKSPACE) {
+                //mvwprintw(input_win, 1, 1, (char*) msg_buf);
+                werase(input_win); 
+                msg_buf[msg_size++] = 0; 
+            } else {
+                msg_buf[msg_size++] = (char) symbol;
+            }
             //mvwprintw(input_win,1 ,1, (char*) "mmmm");
         }
-        /*
-         else {
-            mvwprintw(input_win,1 ,1, (char*) "CCCCCCCC");
-        }
-        */
             //mvwprintw(input_win,1 ,1, (char*) "CCCCCCCC");
         mvwprintw(input_win,1 ,1, (char*) msg_buf);
         wrefresh(input_win);
-        /*
-        sleep(1);
-        i++;
-        */
     }
     endwin();
     msg_buf[0] = (char ) symbol;
     printf("ddddd = %s", msg_buf);
     printf("ddddd %i = %c", sizeof symbol, (char) symbol);
+    */
 
     /*
     char str[100];
