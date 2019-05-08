@@ -107,11 +107,11 @@ static int set_new_size_friends_list(FriendsVector* friends, int new_size)
 }
 
 
-bool static append_place_to_friends_list(FriendsVector* friends) {
+static int append_place_to_friends_list(FriendsVector* friends) {
     //set_new_size_friends_list
     int size_before = friends->_size;
     set_new_size_friends_list(friends, friends->_size + 1);
-    return size_before < friends->_size;
+    return size_before < friends->_size ? 1 : 0;
 }
 
 void init_friends_list(FriendsVector* friends)
@@ -140,9 +140,9 @@ user
 -> name
 */
 
-Messenger* new_messenger()
+struct Messenger* new_messenger()
 {
-    Messenger* messenger = (Messenger*) calloc(1, sizeof(Messenger));
+    struct Messenger* messenger = (struct Messenger*) calloc(1, sizeof(struct Messenger));
 
     if (!messenger) {
         return NULL;
@@ -154,7 +154,7 @@ Messenger* new_messenger()
     return messenger;
 }
 
-void close_messenger(Messenger* messenger)
+void close_messenger(struct Messenger* messenger)
 {
     close_network(messenger->network);
     free_friends_list(&messenger->friends);
@@ -180,7 +180,7 @@ void init_new_friend(FriendsVector* friends)
 }
 
 /*api*/
-void try_add_friend_with_request(Messenger* messenger/*, const uint8_t* user_address, const uint8_t* msg*/)
+void try_add_friend_with_request(struct Messenger* messenger/*, const uint8_t* user_address, const uint8_t* msg*/)
 {
     //checking of address
     //m_addfriend
@@ -245,7 +245,7 @@ int main() {
     //fgets(str, 100, stdin);
     scanf("%i", &port);
     
-    Messenger* messenger = new_messenger();
+    struct Messenger* messenger = new_messenger();
     char a[5] = {'a', 'v', 'c', 'c', '\0'};
     LOG_TRACE("UEUEUEUE, %s %i", a,  (uint8_t*) a);
     try_add_friend_with_request(messenger);

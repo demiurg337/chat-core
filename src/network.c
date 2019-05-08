@@ -54,7 +54,7 @@ Network* new_network()
     !!!!!!!!!!!
     */
     struct sockaddr_storage addr;
-    memset(&addr, 0, sizeof(sockaddr_storage));
+    memset(&addr, 0, sizeof(struct sockaddr_storage));
     
     //bind socket to some address and port 
     //will use ip6
