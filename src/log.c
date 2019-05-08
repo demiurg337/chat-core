@@ -7,7 +7,7 @@
 #include <stdarg.h>
 
 
-void log(const char* file, int line, const char* func, const char* msg_template, ...) {
+void do_log(const char* file, int line, const char* func, const char* msg_template, ...) {
     time_t t_raw;
     struct tm * t_info;
 
