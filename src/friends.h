@@ -1,3 +1,5 @@
+#ifndef C_CHAT_CORE_FRIENDS
+#define C_CHAT_CORE_FRIENDS
 #include <stdint.h>
 #include "network.h"
 
@@ -41,3 +43,4 @@ void init_friends_list(FriendsVector* friends);
 void free_friends_list(FriendsVector* friends);
 void init_new_friend(FriendsVector* friends); 
 void try_add_friend_with_request(struct Messenger* messenger/*, const uint8_t* user_address, const uint8_t* msg*/);
+#endif //C_CHAT_CORE_FRIENDS
