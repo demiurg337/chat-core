@@ -2,6 +2,7 @@
 #define C_CHAT_CORE_FRIENDS
 #include <stdint.h>
 #include "network.h"
+#include "messenger.h"
 
 typedef enum {
     REGULAR_FRIEND,
@@ -21,20 +22,6 @@ typedef struct {
 struct Messenger {
     Network* network;
     FriendsVector friends;
-
-
-//net
-
-//dht
-//group chats
-//friends
-//log
-//crypto
-//options
-
-/*
-Saving of friends is in separated way
-*/
 };
 
 static int set_new_size_friends_list(FriendsVector* friends, int new_size);
