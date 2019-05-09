@@ -10,50 +10,10 @@
 
 #include "log.h"
 #include "network.h"
-#include "utils.h"
-
-////////////////////////////////////////
-////////////////////////////////////////
-// need to move to some utils
-// wrappers
-
-////////////////////////////////////////
-////////////////////////////////////////
-
-typedef enum {
-    REGULAR_FRIEND,
-    WAITING_CONFIRMATION_OF_FRIENDSHIP
-} Friend_Status;
-
-typedef struct {
-    uint8_t public_key;
-    Friend_Status status;
-} Friend;
-
-typedef struct {
-    int _size;
-    Friend* data;
-} FriendsVector;
+#include "friends.h"
 
 
-struct Messenger {
-    Network* network;
-    FriendsVector friends;
 
-
-//net
-
-//dht
-//group chats
-//friends
-//log
-//crypto
-//options
-
-/*
-Saving of friends is in separated way
-*/
-};
 ///////////////////////////////////////////////////
 ///////////////////////////////////////////////////
 ///////////////////////////////////////////////////
@@ -64,47 +24,9 @@ Saving of friends is in separated way
 /*
 Return new size
 */
-static int set_new_size_friends_list(FriendsVector* friends, int new_size)
-{
-    if (new_size < 0) {
-        LOG_FATAL("Size can't be less than 0 !");
-    }
-
-    if (new_size > 0) {
-        if (friends->_size == 0) {
-            friends->data = (Friend*) safe_calloc(new_size, sizeof(Friend)); 
-        } else {
-            friends->data = (Friend*) safe_realloc(friends->data, new_size * sizeof(Friend)); 
-            if (new_size > friends->_size) {
-                memset(&friends->data[friends->_size], 0, (new_size - friends->_size) * sizeof(Friend));
-            }
-        }
-
-    } else {
-    }
-
-    friends->_size = new_size;
-    return new_size;
-}
 
 
-static int append_place_to_friends_list(FriendsVector* friends) {
-    //set_new_size_friends_list
-    int size_before = friends->_size;
-    set_new_size_friends_list(friends, friends->_size + 1);
-    return size_before < friends->_size ? 1 : 0;
-}
 
-void init_friends_list(FriendsVector* friends)
-{
-    friends->_size = 0;
-}
-
-
-void free_friends_list(FriendsVector* friends)
-{
-    free(friends->data);
-}
 ///////////////////////////////////////////////////
 ///////////////////////////////////////////////////
 ///////////////////////////////////////////////////
@@ -144,50 +66,9 @@ void close_messenger(struct Messenger* messenger)
 
 
 
-void init_new_friend(FriendsVector* friends) 
-{
-    //messeger variable with all friends
-
-
-    /*
-    Seems like 
-    friendlist is big, big, big pointer !!!!
-    */
-    append_place_to_friends_list(friends);
-    friends->data[friends->_size - 1].public_key = 100;
-    friends->data[friends->_size - 1].status = REGULAR_FRIEND;
-    
-    //friends->data[friends-size - 1].public_key = "zzzzzzzzzzzzz";
-}
-
-/*api*/
-void try_add_friend_with_request(struct Messenger* messenger/*, const uint8_t* user_address, const uint8_t* msg*/)
-{
-    //checking of address
-    //m_addfriend
-
-    //check address
-    // address is id public key
-    
-    //find user by this id
-    // and check is it already 
-    // - added
-    // - already sent
-    // ...
-
-
-    /// init_new_friend
-    init_new_friend(&messenger->friends);
-
-    //change config for sending the message
-    //(it will be in main cicle, in do_friends
-}
 
 
 
-void do_friends() {
-    
-}
 
 
 void send_packet(int from_socket, int port) 
@@ -237,7 +118,6 @@ int main() {
     struct sockaddr_in6 addr6_was_sent;
     socklen_t addr_len = sizeof(addr6_was_sent);
     while(1) {
-        do_friends();
         printf("\n\n=======\n\n");
         send_packet(messenger->network->socket_d, port);
         //send_packet(m->socket_d);
