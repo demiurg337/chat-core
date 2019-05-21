@@ -25,9 +25,8 @@ void close_messenger(struct Messenger* messenger)
 }
 
 
-void send_packet(int from_socket, int port) 
+void send_packet(int from_socket, int port, const char* msg) 
 {
-    const char* msg = "qwert";
     int length = 6;
     size_t address_size = sizeof(struct sockaddr_in6);
 

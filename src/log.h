@@ -3,6 +3,8 @@
 
 #include <stdio.h>
 #include <time.h>
+#include <stdlib.h>
+
 typedef enum Log_lvl {
     IS_LOG_TRACE,
     IS_LOG_DEBUG,

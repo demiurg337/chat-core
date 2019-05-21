@@ -32,7 +32,9 @@ int main() {
     socklen_t addr_len = sizeof(addr6_was_sent);
     while(1) {
         printf("\n\n=======\n\n");
-        send_packet(messenger->network->socket_d, port);
+
+        const char* msg = "qwert";
+        send_packet(messenger->network->socket_d, port, msg);
         //send_packet(m->socket_d);
         //usleep(20000);//0.02
         
