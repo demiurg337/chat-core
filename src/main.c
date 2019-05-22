@@ -14,6 +14,15 @@
 
 
 int main() {
+
+    /*
+    At this moment all users are on one local computer
+    on diferrent ports
+
+    for adding functional with different addreses
+        getaddrinfo
+        getifaddrs
+    */
     char str[100];
     int port;
     printf("Enter host for sending message:\n\n");
