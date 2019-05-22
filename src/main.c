@@ -27,20 +27,18 @@ int main() {
 
     printf("++++++++++++%i", messenger->friends._size);
     int num_received_bytes = 0;
-    char msg[10];
+    char msg_rec[10];
     struct sockaddr_in6 addr6_was_sent;
     socklen_t addr_len = sizeof(addr6_was_sent);
     while(1) {
         printf("\n\n=======\n\n");
 
-        const char* msg = "qwert";
+        char* msg = "qwert";
         send_packet(messenger->network->socket_d, port, msg);
-        //send_packet(m->socket_d);
-        //usleep(20000);//0.02
         
-        num_received_bytes = recvfrom(messenger->network->socket_d, msg, 10, 0, (struct sockaddr*) &addr6_was_sent, &addr_len);
+        num_received_bytes = recvfrom(messenger->network->socket_d, msg_rec, 10, 0, (struct sockaddr*) &addr6_was_sent, &addr_len);
         if (num_received_bytes > 0) {
-            printf("\n\nReceived message: %s", msg);
+            printf("\n\nReceived message: %s", msg_rec);
         } else if(num_received_bytes == -1) {
 
             printf("Error has been occured: %s", strerror(errno));
