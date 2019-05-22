@@ -1,6 +1,7 @@
 #include "friends.h"
 #include "log.h"
 #include "utils.h"
+#include "string.h"
 
 static int set_new_size_friends_list(FriendsVector* friends, int new_size)
 {
